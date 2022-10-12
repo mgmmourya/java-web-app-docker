@@ -25,5 +25,12 @@ pipeline{
                 sh "mvn deploy"
             }
         }
+          stage("Deploying"){
+            steps{
+                sshagent(['838ac8d1-b10a-440b-9116-7ee44bf89ec1']){
+        sh "scp -o StrictHostKeyChecking=no target/java-web-app-1.0-SNAPSHOT.war ec2-user@3.6.126.248:/opt/tomcat/webapps"
+}
+            }
+        }
     }//stages closing
 }//pipeline closing
