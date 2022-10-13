@@ -9,11 +9,15 @@ pipeline{
     triggers {
   pollSCM ('* * * * *')
 }
+    parameters {
+  choice choices: ['master', 'dev', 'qa'], description: 'select the branch', name: 'Branch'
+  string description: 'provide your name', name: 'Name'
+}
     stages{
         stage("Cloning"){
             steps{
 
-                git credentialsId: '19127c07-7e12-4694-a7b4-fba271c0d208', url: 'https://github.com/mgmmourya/java-web-app-docker.git'
+                git branch:"${params.Branch}",credentialsId: '19127c07-7e12-4694-a7b4-fba271c0d208', url: 'https://github.com/mgmmourya/java-web-app-docker.git'
             }
         }
         stage("Build"){
