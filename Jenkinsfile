@@ -6,9 +6,7 @@ pipeline{
     options {
   buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5')
 }
-    triggers {
-  pollSCM ('* * * * *')
-}
+    
     parameters {
   choice choices: ['master', 'dev', 'qa'], description: 'select the branch', name: 'Branch'
   string description: 'provide your name', name: 'Name'
@@ -16,7 +14,7 @@ pipeline{
     stages{
         stage("Cloning"){
             steps{
-                echo this the name which you have provide "${params.Name}"
+                echo "this the name which you have provide" "${params.Name}"
                 git branch:"${params.Branch}",credentialsId: '19127c07-7e12-4694-a7b4-fba271c0d208', url: 'https://github.com/mgmmourya/java-web-app-docker.git'
             }
         }
